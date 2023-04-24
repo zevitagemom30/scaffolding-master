@@ -4,7 +4,7 @@ Simple cocoon responsible for managing independent applications.
 ## Cloning the project
 In theory, it should be a simple step, being:
 ```
-$ git clone --recurse-submodules git@github.com:zevitagem/evolke-test-cocoon.git
+$ git clone --recurse-submodules git@github.com:zevitagemom30/consolidacao-cocoon.git
 ```
 
 ## Installation
