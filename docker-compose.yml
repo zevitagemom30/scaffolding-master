@@ -1,26 +1,26 @@
 version: '3.8'
 services:
-    php:
-        container_name: php
+    consolidacao-php:
+        container_name: consolidacao-php
         build:
             context: ./
             dockerfile: images/php/Dockerfile
         depends_on:
-            - mysql
+            - consolidacao-mysql
         links:
-            - mysql
+            - consolidacao-mysql
         ports:
             - "8080:80"
         networks:
-            - app-network
+            - consolidacao-app-network
         volumes:
             - ./config/apache/default.conf:/etc/apache2/sites-enabled/default.conf
             - type: bind
               source: ./source
               target: /var/www/html
-    mysql:
+    consolidacao-mysql:
         platform: linux/x86_64
-        container_name: mysql
+        container_name: consolidacao-mysql
         image: mysql
         restart: always
         environment:
@@ -28,26 +28,40 @@ services:
         ports:
             - "3306:3306"
         networks:
-            - app-network
-            - database-network
+            - consolidacao-app-network
+            - consolidacao-database-network
         volumes:
             - ./storage/mysql:/var/lib/mysql
         user: "696834663:20"
-    phpmyadmin:
-        container_name: phpmyadmin
+    consolidacao-phpmyadmin:
+        container_name: consolidacao-phpmyadmin
         image: phpmyadmin
         ports:
             - "3305:80"
         restart: always
         environment:
-            PMA_HOST: mysql
+            PMA_HOST: consolidacao-mysql
             PMA_PASSWORD: ""
         depends_on:
-            - mysql
+            - consolidacao-mysql
         networks:
-            - database-network
+            - consolidacao-database-network
+    consolidacao-postgres:
+        container_name: consolidacao-postgres
+        image: postgres
+        networks:
+            - consolidacao-app-network
+        volumes:
+            - ./storage/postgres:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: "db"
+            POSTGRES_HOST_AUTH_METHOD: "trust"
+            POSTGRES_PASSWORD: ""
+            POSTGRES_USER: ""
+        ports:
+          - "5432:5432"
 volumes:
     source:
 networks:
-  app-network:
-  database-network:
+  consolidacao-app-network:
+  consolidacao-database-network:

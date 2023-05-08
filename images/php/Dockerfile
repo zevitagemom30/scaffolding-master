@@ -1,5 +1,5 @@
 #origin
-FROM php:8.0-apache AS php8
+FROM php:8.1-apache AS php8
 
 #copies
 COPY source /var/www/html
@@ -33,8 +33,13 @@ RUN apt-get install -y \
     libzip-dev \
     zip
 
+#postgre
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+
 #extensions
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_pgsql pgsql
+RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install zip
 
 #commands
