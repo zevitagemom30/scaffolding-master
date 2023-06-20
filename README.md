@@ -29,6 +29,7 @@ Container consolidacao-phpmyadmin  ... Started
 After that, regardless of whether you used compose or not, it will be necessary to enable `a2enmod rewrite`.
 Access your HTTP server terminal and run the following commands:
 ```
+$ docker-compose exec consolidacao-php bash
 $ a2enmod rewrite
 $ service apache2 restart
 ```
@@ -51,6 +52,12 @@ rm 'source/app/.gitkeep'
 ```
 
 Finally, try running the command responsible for adding a sub-module again.
+
+To access the containers check the port that the desired container is configured in the docker-compose.yml file.
+In the configured examples we have the following addresses:
+http://localhost:8080
+e
+http://localhost:9000
 
 ### Technologies and Libraries
 - [Docker] - https://www.docker.com
