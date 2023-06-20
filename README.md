@@ -56,7 +56,7 @@ Finally, try running the command responsible for adding a sub-module again.
 To access the containers check the port that the desired container is configured in the docker-compose.yml file.
 In the configured examples we have the following addresses:
 http://localhost:8080
-e
+  and/or
 http://localhost:9000
 
 ### Technologies and Libraries
