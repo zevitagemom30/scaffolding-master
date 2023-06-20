@@ -16,7 +16,25 @@ services:
         volumes:
             - ./config/apache/default.conf:/etc/apache2/sites-enabled/default.conf
             - type: bind
-              source: ./source
+              source: ./source/consolidacao-app
+              target: /var/www/html
+    e-sus:
+        container_name: e-sus
+        build:
+            context: ./
+            dockerfile: images/php/Dockerfile
+        depends_on:
+            - consolidacao-mysql
+        links:
+            - consolidacao-mysql
+        ports:
+            - "9000:80"
+        networks:
+            - consolidacao-app-network
+        volumes:
+            - ./config/apache/default.conf:/etc/apache2/sites-enabled/default.conf
+            - type: bind
+              source: ./source/e-sus
               target: /var/www/html
     consolidacao-mysql:
         platform: linux/x86_64
