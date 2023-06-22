@@ -3,7 +3,7 @@
 spinner() {
     local PROC="$1"
     local str="${2:-"loading container..."}"
-    local delay="0.1"
+    local delay="0.7"
     tput civis
     printf "\033[1;32m"
     while [ -d /proc/$PROC ]; do
@@ -48,8 +48,7 @@ select pasta in $pastas; do
     if [ -f "${arquivo_yml}" ]; then
       echo "Executando ${arquivo_yml}..."
       
-      # Checa qual comando o usuário deseja executar
-      # Prompt para selecionar a ação
+      # Prompt para comando o usuário deseja executar
       read -p "Selecione uma ação: (build/up/down/restart) " acao
 
       case $acao in
