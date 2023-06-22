@@ -6,12 +6,6 @@ COPY source /var/www/html
 #COPY images/php/run.sh /tmp
 
 #workdir
-#ENV APPPATH app
-# WORKDIR /var/www/html/$APPPATH
-# ***************************
-# quando rodamos o comando: docker-compose up --build -d
-# está sendo criada a pasta app dentro do diretório especificado do docker-compose.yml
-
 WORKDIR /var/www/html
 
 #tools
