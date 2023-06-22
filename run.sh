@@ -113,7 +113,7 @@ select pasta in $pastas; do
        
     else
       printf "\033[1;31m"
-      echo "Arquivo .yml não encontrado para a pasta ${nome_pasta}."
+      echo "Arquivo docker-compose.yml não encontrado para a pasta ${nome_pasta}."
       printf "\033[0m"
     fi
     break
