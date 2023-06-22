@@ -29,7 +29,7 @@ Container consolidacao-phpmyadmin  ... Started
 After that, regardless of whether you used compose or not, it will be necessary to enable `a2enmod rewrite`.
 Access your HTTP server terminal and run the following commands:
 ```
-$ docker-compose exec consolidacao-php bash
+$ docker-compose exec <container_name> bash
 $ a2enmod rewrite
 $ service apache2 restart
 ```
