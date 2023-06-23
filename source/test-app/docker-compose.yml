@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+    regulacao-app:
+        container_name: regulacao-app
+        build:
+            context: ../../
+            dockerfile: ./images/php/Dockerfile
+        depends_on:
+            - regulacao-mysql
+        links:
+            - regulacao-mysql
+        ports:
+            - "8181:80"
+        networks:
+            - regulacao-app-network
+        volumes:
+            - type: bind
+              source: ./public
+              target: /var/www/html
+            #- ./config/apache/default.conf:/etc/apache2/sites-enabled/default.conf
+    regulacao-mysql:
+        platform: linux/x86_64
+        container_name: regulacao-mysql
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        ports:
+            - "3336:3306"
+        networks:
+            - regulacao-app-network
+            - regulacao-database-network
+        volumes:
+            - ./storage/mysql:/var/lib/mysql
+    regulacao-phpmyadmin:
+        container_name: regulacao-phpmyadmin
+        image: phpmyadmin
+        ports:
+            - "3312:80"
+        restart: always
+        environment:
+            PMA_HOST: regulacao-mysql
+            PMA_PASSWORD: ""
+        depends_on:
+            - regulacao-mysql
+        networks:
+            - regulacao-database-network
+volumes:
+    source:
+networks:
+  regulacao-app-network:
+  regulacao-database-network:
