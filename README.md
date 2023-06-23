@@ -42,7 +42,7 @@ If the selected application/folder is already in the `git` history, the followin
 If the above error is displayed, confirm the `staged` state of that directory with the following command:
 ```
 $ git ls-files --stage source/app 
-100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	app/.gitkeep
+100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	app/.gitkeep 
 ```
 
 Before continuing, you must "clear" this information:
