@@ -1,26 +1,26 @@
 version: '3.8'
 services:
-    regulacao-app:
-        container_name: regulacao-app
+    test-app:
+        container_name: test-app
         build:
             context: ../../
             dockerfile: ./images/php/Dockerfile
         depends_on:
-            - regulacao-mysql
+            - test-mysql
         links:
-            - regulacao-mysql
+            - test-mysql
         ports:
             - "8181:80"
         networks:
-            - regulacao-app-network
+            - test-app-network
         volumes:
             - type: bind
               source: ./public
               target: /var/www/html
             #- ./config/apache/default.conf:/etc/apache2/sites-enabled/default.conf
-    regulacao-mysql:
+    test-mysql:
         platform: linux/x86_64
-        container_name: regulacao-mysql
+        container_name: test-mysql
         image: mysql
         restart: always
         environment:
@@ -28,25 +28,25 @@ services:
         ports:
             - "3336:3306"
         networks:
-            - regulacao-app-network
-            - regulacao-database-network
+            - test-app-network
+            - test-database-network
         volumes:
             - ./storage/mysql:/var/lib/mysql
-    regulacao-phpmyadmin:
-        container_name: regulacao-phpmyadmin
+    test-phpmyadmin:
+        container_name: test-phpmyadmin
         image: phpmyadmin
         ports:
             - "3312:80"
         restart: always
         environment:
-            PMA_HOST: regulacao-mysql
+            PMA_HOST: test-mysql
             PMA_PASSWORD: ""
         depends_on:
-            - regulacao-mysql
+            - test-mysql
         networks:
-            - regulacao-database-network
+            - test-database-network
 volumes:
     source:
 networks:
-  regulacao-app-network:
-  regulacao-database-network:
+  test-app-network:
+  test-database-network:
