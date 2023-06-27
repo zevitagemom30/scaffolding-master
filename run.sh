@@ -2,8 +2,8 @@
 
 spinner() {
     local PROC="$1"
-    local str="${2:-"loading container..."}"
-    local delay="0.7"
+    local str="${2:-"carregando..."}"
+    local delay="0.3"
     tput civis
     printf "\033[1;32m"
     while [ -d /proc/$PROC ]; do
@@ -15,6 +15,19 @@ spinner() {
     printf '\033[s\033[u%*s\033[u\033[0m' $((${#str}+6)) " "
     tput cnorm
     return 0
+}
+
+promptMessage() {
+    local str="$1"
+    if [ $str -eq 0 ]; then
+        printf "\033[1;32m"
+        echo "Execução concluída."
+        printf "\033[0m"
+    else
+        printf "\033[1;31m"
+        echo "Erro na execução, verifique as configurações e tente novamente."
+        printf "\033[0m"
+    fi
 }
 
 # Diretório que contém os projetos
@@ -46,63 +59,42 @@ select pasta in $pastas; do
     # Verifica se existe um arquivo .yml correspondente
     arquivo_yml="${pasta}/docker-compose.yml"
     if [ -f "${arquivo_yml}" ]; then
-      echo "Executando ${arquivo_yml}..."
+
+    sleep 0.3 &
+    spinner $!
+    echo "Executando ${arquivo_yml}..."
       
       # Prompt para comando o usuário deseja executar
       read -p "Selecione uma ação: (build/up/down/restart) " acao
 
       case $acao in
           build)
+              sleep 0.3 &
+              spinner $!
               echo "Executando comando 'docker build'..."
               sudo docker-compose -f "${arquivo_yml}" up -d --build
-              if [ $? -eq 0 ]; then
-                  printf "\033[1;32m"
-                  echo "Execução concluída."
-                  printf "\033[0m"
-              else
-                  printf "\033[1;31m"
-                  echo "Erro na execução, verifique as configurações e tente novamente."
-                  printf "\033[0m"
-              fi
+              promptMessage $?
               ;;
           up)
+              sleep 0.3 &
+              spinner $!
               echo "Executando comando 'docker-compose up'..."
               sudo docker-compose -f "${arquivo_yml}" up -d
-              if [ $? -eq 0 ]; then
-                  printf "\033[1;32m"
-                  echo "Execução concluída."
-                  printf "\033[0m"
-              else
-                  printf "\033[1;31m"
-                  echo "Erro na execução, verifique as configurações e tente novamente."
-                  printf "\033[0m"
-              fi
+              promptMessage $?
               ;;
           down)
+              sleep 0.3 &
+              spinner $!
               echo "Executando comando 'docker-compose down'..."
               sudo docker-compose -f "${arquivo_yml}" down
-              if [ $? -eq 0 ]; then
-                  printf "\033[1;32m"
-                  echo "Execução concluída."
-                  printf "\033[0m"
-              else
-                  printf "\033[1;31m"
-                  echo "Erro na execução, verifique as configurações e tente novamente."
-                  printf "\033[0m"
-              fi
+              promptMessage $?
               ;;
           restart)
+              sleep 0.3 &
+              spinner $!
               echo "Executando comando 'docker-compose restart'..."
               sudo docker-compose -f "${arquivo_yml}" restart
-              if [ $? -eq 0 ]; then
-                  printf "\033[1;32m"
-                  echo "Execução concluída."
-                  printf "\033[0m"
-              else
-                  printf "\033[1;31m"
-                  echo "Erro na execução, verifique as configurações e tente novamente."
-                  printf "\033[0m"
-              fi
+              promptMessage $?
               ;;
           *)
               printf "\033[1;31m"
