@@ -1,32 +1,115 @@
-# Cocoon project
-Simple cocoon responsible for managing independent applications.
+# Project
+Scaffolding Master is responsible for managing independent applications.
 
-### Cloning the project
-In theory, it should be a simple step, being:
+## Cloning the project
+Cloning the project is a simple step. Just run the following command:
 ```
-$ git clone --recurse-submodules git@github.com:zevitagemom30/consolidacao-cocoon.git
+$ git clone https://github.com/zevitagemom30/scaffolding-master.git
 ```
 
-### Installation
-There are two ways to set up your environment, with or without `docker-compose.yml` (container manager).
+## After cloning the project, you will have the following folder structure:
+File tree:
+```
+├── images
+│   ├── mysql
+│   │   └── Dockerfile
+│   ├── php
+│   │   └── Dockerfile
+│   ├── phpmyadmin
+│   │   └── Dockerfile
+│   └── wiki
+├── source
+│   ├── test-app
+|   |   ├── public
+|   |   |   └── index.html
+|   |   ├── docker-compose.yml
+│   │   └── .dockerignore
+├── templates
+|   ├── apache
+|   |   └── default.conf
+├── .gitignore
+├── .gitmodules
+├── README.md
+└── run.sh
+```
 
-### Using `docker-compose.yml`
-In the root of the project, run:
+## Adding sub-projects
+The `source` folder is responsible for storing all the projects that this structure will handle. As this repository is not responsible for knowing the code of the projects to be cloned, we have chosen to follow the "sub-modules" approach for adding them. Here's an example of how to add a sub-module:
 
 ```
-$ docker-compose up -d --build
+$ cd source
+$ git submodule add <url>
+```
 
+## Installation
+Make sure you are using a Windows or Linux terminal because there may be slight differences in the commands presented below, depending on the scenario:
+
+```
+$ chmod +x ./run.sh
+$ ./run.sh
+```
+
+At this point, all applications contained within the `source` folder will be displayed. Choose the number corresponding to the application you want to use:
+
+```
+Select the applications to install:
+1) source/test-app
+#? 1
+```
+
+### IMPORTANT:
+You need to have the `docker-compose.yml` file inside the folder for the desired application. We provide a concise example of this file in `test-app`.
+
+After selecting the application number, you will be asked which Docker action you want to perform `(build, up, down, restart)`:
+```
+$ Selected Application: source/test-app
+$ Running source/test-app/docker-compose.yml...
+$ Select an action: (build/up/down/restart) 
+```
+
+After selecting the command, for example, `up`, the result should be similar to the following:
+``` 
 Creating network "app-network" with the default driver
 Creating network "database-network" with the default driver
 
-Container consolidacao-postgres    ... Started
-Container consolidacao-php         ... Started
-Container consolidacao-mysql       ... Started
-Container consolidacao-pgadmin     ... Started
-Container consolidacao-phpmyadmin  ... Started
+Container <container_name>-postgres    ... Started
+Container <container_name>-php         ... Started
+Container <container_name>-mysql       ... Started
+Container <container_name>-pgadmin     ... Started
+Container <container_name>-phpmyadmin  ... Started
 ```
 
-After that, regardless of whether you used compose or not, it will be necessary to enable `a2enmod rewrite`.
+If you choose, for example, `down/up`, something like this should be displayed:
+
+```
+Executing 'docker-compose down' command...
+Container test-phpmyadmin  Stopping
+Container test-app  Stopping
+Container test-phpmyadmin  Stopped
+Container test-phpmyadmin  Removing
+Container test-phpmyadmin  Removed
+Container test-app  Stopped
+Container test-app  Removing
+Container test-app  Removed
+Container test-mysql  Stopping
+Container test-mysql  Stopped
+Container test-mysql  Removing
+Container test-mysql  Removed
+Network test-app_test-app-network  Removing
+Network test-app_test-database-network  Removing
+Network test-app_test-app-network  Removed
+Network test-app_test-database-network  Removed
+```
+
+## How to use
+To access the containers/services, check the port to which the desired container is configured in the `docker-compose.yml` file. In the provided examples, we have the following addresses:
+- APP: http://localhost:8080
+- PHPMYADMIN: http://localhost:3305
+- MYSQL: http://localhost:3306
+
+## Comments
+1 - If you choose to use Apache in any of your sub-modules, it may be necessary to enable the rewriting by using a2enmod. Here are some commands to help you with that:
+
 Access your HTTP server terminal and run the following commands:
 ```
 $ docker-compose exec <container_name> bash
@@ -34,18 +117,18 @@ $ a2enmod rewrite
 $ service apache2 restart
 ```
 
-If the selected application/folder is already in the `git` history, the following message will be displayed:
+2 - If the selected application/folder is already in the `git` history, the following message will be displayed:
 ```
 'source/app' already exists in the index
 ```
 	
-If the above error is displayed, confirm the `staged` state of that directory with the following command:
+If you see the above error, confirm the "staged" state of that directory with the following command:
 ```
 $ git ls-files --stage source/app 
 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0	app/.gitkeep 
 ```
 
-Before continuing, you must "clear" this information:
+Before proceeding, you need to "clear" this information:
 ```
 $ git rm --cached source/app -r
 rm 'source/app/.gitkeep'
@@ -53,34 +136,8 @@ rm 'source/app/.gitkeep'
 
 Finally, try running the command responsible for adding a sub-module again.
 
-To access the containers check the port that the desired container is configured in the docker-compose.yml file.
-In the configured examples we have the following addresses:
-http://localhost:8080
-and/or
-http://localhost:9000
-
 ### Technologies and Libraries
 - [Docker] - https://www.docker.com
 - [Docker Compose] - https://docs.docker.com/compose
 - [Apache] - https://www.apache.org
 - [Git] - https://git-scm.com
-- [PgAdmin] - https://www.pgadmin.org
-
----
-
-From here on down, there will be shortcut commands for quick reference ...
-
-### Connect to Postgres database via terminal:
-`psql -U postgres -h localhost`
-
-### Choose Postgres database:
-`\c <database_name>`
-
-### List Postgres tables (after choosing the database):
-`\dt`
-
-### Disable pagination in Postgres to display all records:
-`\pset pager off`
-
-### Running a query inside Postgres:
-`SELECT * FROM <table>;`
