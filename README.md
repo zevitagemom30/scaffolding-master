@@ -1,32 +1,70 @@
-# Cocoon project
-Simple cocoon responsible for managing independent applications.
+# Scaffolding Master project
+Scaffolding Master is responsible for managing independent applications.
 
 ### Cloning the project
-In theory, it should be a simple step, being:
+It should be a simple step, being:
 ```
-$ git clone --recurse-submodules git@github.com:zevitagemom30/consolidacao-cocoon.git
+$ git clone git@github.com:zevitagemom30/<container_name>-cocoon.git
 ```
+### After clone the project, you will get the folder structure:
+File tree :
+```
+├── images
+│   ├── mysql
+│   │   └── Dockerfile
+│   ├── php
+│   │   └── Dockerfile
+│   ├── phpmyadmin
+│   │   └── Dockerfile
+│   └── wiki
+├── source
+│   ├── test-app
+|   |   ├── public
+|   |   |   └── index.html
+|   |   ├── docker-compose.yml
+│   │   └── .dockerignore
+├── templates
+|   ├── apache
+|   |   └── default.conf
+├── .gitignore
+├── .gitmodules
+├── README.md
+└── run.sh
+```
+
 
 ### Installation
-There are two ways to set up your environment, with or without `docker-compose.yml` (container manager).
-
-### Using `docker-compose.yml`
-In the root of the project, run:
-
 ```
-$ docker-compose up -d --build
+$ chmod +x ./run.sh
+$ ./run.sh
+$ Selecione as aplicações a serem instaladas:
+```
+At this moment, all applications contained within the SOURCE folder will be displayed.
+Select with the number referring to the application you want to use.
+#### IMPORTANT:
+You need the docker-compose.yml file inside the folder for the desired application. 
+We provide a compact example of this file in test-app.
+After selecting the application number, you will be asked which Docker action you want to use `(Build, Up, Down, Restar)`
+```
+$ Aplicação selecionada: source/test-app
+$ Executando source/test-app/docker-compose.yml...
+$ Selecione uma ação: (build/up/down/restart) 
+```
+### Running `docker-compose.yml`
 
+After selecting the type of Docker command, the selected application will be executed.
+
+``` 
 Creating network "app-network" with the default driver
 Creating network "database-network" with the default driver
 
-Container consolidacao-postgres    ... Started
-Container consolidacao-php         ... Started
-Container consolidacao-mysql       ... Started
-Container consolidacao-pgadmin     ... Started
-Container consolidacao-phpmyadmin  ... Started
+Container <container_name>-postgres    ... Started
+Container <container_name>-php         ... Started
+Container <container_name>-mysql       ... Started
+Container <container_name>-pgadmin     ... Started
+Container <container_name>-phpmyadmin  ... Started
 ```
 
-After that, regardless of whether you used compose or not, it will be necessary to enable `a2enmod rewrite`.
 Access your HTTP server terminal and run the following commands:
 ```
 $ docker-compose exec <container_name> bash
