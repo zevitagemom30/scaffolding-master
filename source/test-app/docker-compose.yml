@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+    test-app:
+        container_name: test-app
+        build:
+            context: ../../
+            dockerfile: ./images/php/Dockerfile
+        depends_on:
+            - test-mysql
+        links:
+            - test-mysql
+        ports:
+            - "8181:80"
+        networks:
+            - test-app-network
+        volumes:
+            - type: bind
+              source: ./public
+              target: /var/www/html
+            #- ./config/apache/default.conf:/etc/apache2/sites-enabled/default.conf
+    test-mysql:
+        platform: linux/x86_64
+        container_name: test-mysql
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        ports:
+            - "3336:3306"
+        networks:
+            - test-app-network
+            - test-database-network
+        volumes:
+            - ./storage/mysql:/var/lib/mysql
+    test-phpmyadmin:
+        container_name: test-phpmyadmin
+        image: phpmyadmin
+        ports:
+            - "3312:80"
+        restart: always
+        environment:
+            PMA_HOST: test-mysql
+            PMA_PASSWORD: ""
+        depends_on:
+            - test-mysql
+        networks:
+            - test-database-network
+volumes:
+    source:
+networks:
+  test-app-network:
+  test-database-network:

@@ -1,7 +1,5 @@
 nbproject
-storage/mysql
-storage/pgadmin
-storage/postgres
-source/app/*
-!source/app/.gitkeep
+source/*
+!source/test-app
+!source/.gitkeep
 .DS_Store

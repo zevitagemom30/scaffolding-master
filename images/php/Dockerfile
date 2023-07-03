@@ -6,8 +6,7 @@ COPY source /var/www/html
 #COPY images/php/run.sh /tmp
 
 #workdir
-ENV APPPATH app
-WORKDIR /var/www/html/$APPPATH
+WORKDIR /var/www/html
 
 #tools
 RUN apt-get -y update --fix-missing
@@ -40,6 +39,7 @@ RUN apt-get install -y libpq-dev \
 #extensions
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install zip
 
 #commands
