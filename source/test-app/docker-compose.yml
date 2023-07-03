@@ -10,14 +10,14 @@ services:
         links:
             - test-mysql
         ports:
-            - "8181:80"
+            - "8080:80"
         networks:
             - test-app-network
         volumes:
             - type: bind
               source: ./public
               target: /var/www/html
-            #- ./config/apache/default.conf:/etc/apache2/sites-enabled/default.conf
+            #- ../../templates/apache/default.conf:/etc/apache2/sites-enabled/default.conf
     test-mysql:
         platform: linux/x86_64
         container_name: test-mysql
@@ -26,7 +26,7 @@ services:
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
         ports:
-            - "3336:3306"
+            - "3306:3306"
         networks:
             - test-app-network
             - test-database-network
@@ -36,7 +36,7 @@ services:
         container_name: test-phpmyadmin
         image: phpmyadmin
         ports:
-            - "3312:80"
+            - "3305:80"
         restart: always
         environment:
             PMA_HOST: test-mysql

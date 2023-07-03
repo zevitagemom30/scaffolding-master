@@ -45,7 +45,7 @@ fi
 
 # Prompt de seleção das pastas
 printf "\033[0;37m"
-echo "Selecione as aplicações a serem instaladas:"
+echo "Selecione as aplicações a serem manuseadas:"
 printf "\033[0m"
 
 select pasta in $pastas; do
@@ -71,14 +71,14 @@ select pasta in $pastas; do
           build)
               sleep 0.3 &
               spinner $!
-              echo "Executando comando 'docker build'..."
+              echo "Executando comando 'docker-compose up -d --build'..."
               sudo docker-compose -f "${arquivo_yml}" up -d --build
               promptMessage $?
               ;;
           up)
               sleep 0.3 &
               spinner $!
-              echo "Executando comando 'docker-compose up'..."
+              echo "Executando comando 'docker-compose up -d'..."
               sudo docker-compose -f "${arquivo_yml}" up -d
               promptMessage $?
               ;;
@@ -105,7 +105,7 @@ select pasta in $pastas; do
        
     else
       printf "\033[1;31m"
-      echo "Arquivo docker-compose.yml não encontrado para a pasta ${nome_pasta}."
+      echo "Arquivo docker-compose.yml não encontrado na pasta ${nome_pasta}."
       printf "\033[0m"
     fi
     break
