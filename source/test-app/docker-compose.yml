@@ -5,6 +5,8 @@ services:
         build:
             context: ../../
             dockerfile: ./images/php/Dockerfile
+            args:
+                - app_folder=test-app
         depends_on:
             - test-mysql
         links:
@@ -15,7 +17,7 @@ services:
             - test-app-network
         volumes:
             - type: bind
-              source: ./public
+              source: ./
               target: /var/www/html
             #- ../../templates/apache/default.conf:/etc/apache2/sites-enabled/default.conf
     test-mysql:

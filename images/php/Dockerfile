@@ -1,9 +1,15 @@
 #origin
 FROM php:8.1-apache AS php8
 
+ARG app_folder
+
 #copies
-COPY source /var/www/html
-#COPY images/php/run.sh /tmp
+COPY source/$app_folder/ /var/www/html
+
+RUN chown -R www-data:www-data /var/www/html/ \
+    && a2enmod rewrite
+
+RUN service apache2 restart
 
 #workdir
 WORKDIR /var/www/html
