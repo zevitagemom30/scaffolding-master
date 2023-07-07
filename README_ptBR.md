@@ -138,6 +138,35 @@ rm 'source/app/.gitkeep'
 
 Por fim, tente executar novamente o comando responsável por adicionar um submódulo.
 
+3 - Se você deseja usar o arquivo de configuração do Apache `templates/apache/default.conf`, configurado na porta **:80**, provavelmente precisará ignorar o arquivo padrão do Apache `000-default.conf` para considerar suas modificações.
+
+O primeiro passo é acessar o servidor onde o Apache está em execução e, em seguida, executar os seguintes comandos:
+```
+$ docker exec -it test-app bash
+$ cd /etc/apache2/sites-enabled
+```
+
+Se você listar os arquivos na pasta, verá algo como:
+```
+$ ls
+000-default.conf  default.conf
+```
+
+Como ambos os arquivos estão ouvindo a mesma porta **:80**, o primeiro arquivo lido substituirá qualquer regra declarada posteriormente. Portanto, é correto ter apenas um arquivo usando uma porta específica.
+
+Portanto, ou você altera a porta em um dos arquivos ou renomeia um dos arquivos para uma extensão que não seja `.conf`, já que o arquivo `apache2.conf` é responsável por ler qualquer arquivo com essa extensão. Por exemplo:
+`IncludeOptional sites-enabled/*.conf`
+
+```
+$ mv 000-default.conf 000-default.conf.old
+```
+
+Após realizar as etapas acima e garantir que temos apenas um arquivo `.conf` apontando para **:80**, basta reiniciar o servidor do Apache e recarregar sua página.
+
+```
+service apache2 restart
+```
+
 ### Tecnologias e Bibliotecas
 - [Docker] - https://www.docker.com
 - [Docker Compose] - https://docs.docker.com/compose

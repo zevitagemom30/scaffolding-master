@@ -136,6 +136,35 @@ rm 'source/app/.gitkeep'
 
 Finally, try running the command responsible for adding a sub-module again.
 
+3 - If you want to use the Apache configuration template file `templates/apache/default.conf` configured on port **:80**, you will likely need to ignore the default Apache file `000-default.conf` to consider your modifications.
+
+The first step is to access the server where Apache is running, and then execute the following commands:
+```
+$ docker exec -it test-app bash
+$ cd /etc/apache2/sites-enabled
+```
+
+If you list the files in the folder, you will see something like this:
+```
+$ ls
+000-default.conf  default.conf
+```
+
+Since both files are listening on the same port **:80**, the first file read will override any rules declared later. Therefore, it is correct to have only one file using a specific port.
+
+So, either you change the port in one of the files or rename one of the files to an extension other than `.conf`, as the `apache2.conf` file is responsible for reading any file with that extension. For example:
+`IncludeOptional sites-enabled/*.conf`
+
+```
+$ mv 000-default.conf 000-default.conf.old
+```
+
+After performing the above steps and ensuring that we have only one `.conf` file pointing to **:80**, simply restart the Apache server and reload your page.
+
+```
+service apache2 restart
+```
+
 ### Technologies and Libraries
 - [Docker] - https://www.docker.com
 - [Docker Compose] - https://docs.docker.com/compose
