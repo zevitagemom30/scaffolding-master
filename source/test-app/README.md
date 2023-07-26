@@ -26,7 +26,7 @@ INFO  Preparing the database.
 Creating migration table ................................... 137ms DONE
 
 INFO  Running migrations.  
-  2023_05_05_125403_<migration> ................................. 139ms DONE
+2023_05_05_125403_<migration> ................................. 139ms DONE
 ```
 
 ## Technologies and Libraries
@@ -46,8 +46,8 @@ vendor/bin/phpstan analyse app
 ```
 
 ```
- 303/303 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
- [OK] No errors                                                          
+303/303 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
+[OK] No errors                                                          
 ```
 
 ## Unit Tests
@@ -62,11 +62,11 @@ vendor/bin/phpunit --filter 'FamiliaServiceTest'
 PASS  Tests\Unit\ExampleTest
 ✓ that true is true                                       0.16s  
 
- PASS  Tests\Unit\Services\FamiliaServiceTest
+PASS  Tests\Unit\Services\FamiliaServiceTest
 ✓ should execute with success on get with filters         0.98s  
 ✓ should throw municipe is died exception on create       0.07s  
 
- PASS  Tests\Feature\ExampleTest
+PASS  Tests\Feature\ExampleTest
 ✓ the application returns a successful response           5.48s  
 
 Tests:    4 passed (11 assertions)
@@ -123,9 +123,7 @@ in progress
 practical review
 in test
 documentation
-the
-
-oretical review
+theoretical review
 finished
 closed
 ```
@@ -148,8 +146,8 @@ To keep tests readable and organized, we follow the following standard for namin
 Remember that `snake_case` was used as the standard to make the description of the test suite readable in the terminal, for example:
 ```
 PASS  Tests\Unit\Services\FamiliaServiceTest
- ✓ should execute with success on get with filters                  0.98s  
- ✓ should throw municipe is died exception on create                0.07s
+✓ should execute with success on get with filters                  0.98s  
+✓ should throw municipe is died exception on create                0.07s
 ```
 
 ### Other Agreements

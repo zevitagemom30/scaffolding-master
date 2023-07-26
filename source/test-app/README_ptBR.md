@@ -46,8 +46,8 @@ vendor/bin/phpstan analyse app
 ```
 
 ```
- 303/303 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
- [OK] Sem erros                                                          
+303/303 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
+[OK] Sem erros                                                          
 ```
 
 ## Testes Unitários
@@ -62,11 +62,11 @@ vendor/bin/phpunit --filter 'FamiliaServiceTest'
 PASS  Tests\Unit\ExampleTest
 ✓ that true is true                                       0.16s  
 
- PASS  Tests\Unit\Services\FamiliaServiceTest
+PASS  Tests\Unit\Services\FamiliaServiceTest
 ✓ should execute with success on get with filters         0.98s  
 ✓ should throw municipe is died exception on create       0.07s  
 
- PASS  Tests\Feature\ExampleTest
+PASS  Tests\Feature\ExampleTest
 ✓ the application returns a successful response           5.48s  
 
 Tests:    4 passed (11 assertions)
@@ -146,8 +146,8 @@ A fim de manter os testes legíveis e organizados, seguimos o seguinte padrão n
 Lembrando que, foi utilizado o `snake_case` como padrão para que fique legível no terminal toda a descrição da suite de testes, exemplo:
 ```
 PASS  Tests\Unit\Services\FamiliaServiceTest
- ✓ should execute with success on get with filters                  0.98s  
- ✓ should throw municipe is died exception on create                0.07s
+✓ should execute with success on get with filters                  0.98s  
+✓ should throw municipe is died exception on create                0.07s
 ```
 
 ### Outros acordos
