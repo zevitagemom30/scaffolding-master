@@ -42,6 +42,9 @@ RUN apt-get install -y \
 RUN apt-get install -y libpq-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
 #extensions
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 RUN docker-php-ext-install pdo_mysql
