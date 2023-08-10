@@ -50,11 +50,15 @@ vendor/bin/phpstan analyse app
 [OK] No errors                                                          
 ```
 
-## Unit Tests
+## Unit Tests and Integrations
 To ensure the quality and integrity of the code, unit tests are essential. To run them, use the following general or unit-specific command:
 
 ```
+php artisan test
 php artisan test --coverage --min=80.0
+php artisan test --coverage --min=80.0 --testsuite Unit
+php artisan test --coverage --min=80.0 --testsuite Feature
+
 vendor/bin/phpunit --filter 'FamiliaServiceTest'
 ```
 
@@ -83,8 +87,11 @@ Validators/MembrosValidator ............................ 0.0%
 Validators/Municipe/GetWithFiltersValidator ............ 0.0%  
 ─────────────────────────────────────────────────────────────
 Total: 8.1 %  
-FAIL  Code coverage below expected: 8.1 %. Minimum: 80.3 %.
+FAIL  Code coverage below expected: 8.1 %. Minimum: 80.0 %.
 ```
+
+At the end of the execution, output files referring to the coverage will be available, and can be located at: `/tests/Coverage`.
+The `/tests/Coverage/html/index.html` file, for example, contains interesting details about the run and can be accessed via browser.
 
 ## Agreements
 
@@ -110,20 +117,23 @@ Examples:
 To ensure code quality and efficient task completion, we have established the following flow:
 
 ```
-analysis + code + review + [tests + documentation] + code review = `DONE`
+analysis + development + [tests + documentation] + code review + technical review = `DONE`
 ```
 
-> Note: If there are changes that deviate from refactoring during the "code review" stage, it is correct to signal the practical reviewers again to ensure that the new changes applied did not affect the final result.
+> Note: if there are "strange" behaviors during the "technical review" stage, the theoretical reviewers must be alerted.
 
-For this purpose, the respective columns were created in **ClickUp**, containing a status for each step, as follows:
+For this, the respective columns were created in the task manager system, **ClickUp** in this case, containing the respective values, being:
 
 ```
 open
 in progress
-practical review
-in test
+quality tests
 documentation
+awaiting theoretical review
 theoretical review
+awaiting practical review
+practical review
+waiting for correction
 finished
 closed
 ```

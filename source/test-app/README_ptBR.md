@@ -50,11 +50,15 @@ vendor/bin/phpstan analyse app
 [OK] Sem erros                                                          
 ```
 
-## Testes Unitários
+## Testes Unitários e Integrações
 Para garantir a qualidade e integridade do código, os testes unitários são essenciais. Para executá-los, utilize o seguinte comando geral ou unitário respectivamente:
 
 ```
+php artisan test
 php artisan test --coverage --min=80.0
+php artisan test --coverage --min=80.0 --testsuite Unit
+php artisan test --coverage --min=80.0 --testsuite Feature
+
 vendor/bin/phpunit --filter 'FamiliaServiceTest'
 ```
 
@@ -86,6 +90,9 @@ Total: 8.1 %
 FAIL  Code coverage below expected: 8.1 %. Minimum: 80.0 %.
 ```
 
+No fim da execução, estarão disponíveis arquivos de saída referente a cobertura, podendo ser localizados em: `/tests/Coverage`.
+O arquivo `/tests/Coverage/html/index.html`, por exemplo, contém detalhes interessantes sobre a execução e pode ser acessado via navegador. 
+
 ## Acordos
 
 ### Padrão de Branch
@@ -110,20 +117,23 @@ Exemplos:
 Para garantir a qualidade do código e a conclusão das tarefas de forma eficiente, estabelecemos o seguinte fluxo:
 
 ```
-análise + código + revisão + [testes + documentação] + code review = `DONE`
+análise + desenvolvimento + [testes + documentação] + revisão de código + revisão técnica = `CONCLUÍDO`
 ```
 
-> Atenção: se existirem mudanças que fujam de refatoração durante a etapa de "code review", o correto é sinalizar novamente os revisadores práticos para garantir que as novas mudanças aplicadas não influenciaram no resultado final.
+> Atenção: se existirem comportamentos "estranhos" durante a etapa de "revisão técnica", os revisadores teóricos devem ser alertados.
 
-Para isso, foram criadas as respectivas colunas no **ClickUp** contendo um status para cada etapa, sendo:
+Para isso, foram criadas as respectivas colunas no sistema gerenciador de tarefas, **ClickUp** nesse caso, contendo os respectivos valores, sendo:
 
 ```
 aberta
 em andamento
-em revisão prática
-em teste
+testes qualidade
 documentação
-em revisão teórica
+aguardando revisão teórica
+revisão teórica
+aguardando revisão prática
+revisão prática
+aguardando correção
 finalizada
 fechada
 ```
