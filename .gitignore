@@ -3,3 +3,4 @@ source/*
 !source/test-app
 !source/.gitkeep
 .DS_Store
+.idea/*
