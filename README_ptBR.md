@@ -167,6 +167,15 @@ Após realizar as etapas acima e garantir que temos apenas um arquivo `.conf` ap
 service apache2 restart
 ```
 
+Se você desejar criar algum arquivo .ini de PHP para configurações específicas, crie o arquivo .ini e coloque dentro da pasta `templates/php/custom.d`.
+
+Configuração padrão atual:
+```
+error_reporting.ini
+memory_limit.ini
+xdebug.ini
+```
+
 ### Tecnologias e Bibliotecas
 - [Docker] - https://www.docker.com
 - [Docker Compose] - https://docs.docker.com/compose
